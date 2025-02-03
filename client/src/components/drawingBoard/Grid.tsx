@@ -1,8 +1,8 @@
+import { BASE_COLOR } from "@/utils/colors";
 import { useState } from "react";
 
 const ROWS = 32;
 const COLS = 32;
-const BASE_COLOR = "bg-white";
 
 export default function Grid({
   selectedColor = "bg-blue-500",
