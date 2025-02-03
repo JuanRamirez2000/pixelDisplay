@@ -1,4 +1,5 @@
 import { BASE_COLOR } from "@/utils/colors";
+import convertTailwindToHex from "@/utils/convertTailwindToHex";
 import { useState } from "react";
 
 const ROWS = 32;
@@ -43,8 +44,12 @@ export default function Grid({
     setGrid(clear);
   };
 
+  const uploadBoard = () => {
+    convertTailwindToHex(grid);
+  };
+
   return (
-    <div>
+    <section>
       {debug && (
         <span>
           x: {hoveredCell[0]} y: {hoveredCell[1]}
@@ -74,7 +79,13 @@ export default function Grid({
         >
           Clear Board
         </button>
+        <button
+          className="px-2 py-1 rounded-lg border-2 hover:bg-sky-200 cursor-pointer"
+          onClick={() => uploadBoard()}
+        >
+          Upload
+        </button>
       </div>
-    </div>
+    </section>
   );
 }
