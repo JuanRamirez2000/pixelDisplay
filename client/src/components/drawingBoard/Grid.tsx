@@ -35,6 +35,14 @@ export default function Grid({
     }
   };
 
+  const clearBoard = () => {
+    const clear = Array.from({ length: ROWS }, () =>
+      Array(COLS).fill(BASE_COLOR)
+    );
+
+    setGrid(clear);
+  };
+
   return (
     <div>
       {debug && (
@@ -59,6 +67,14 @@ export default function Grid({
           });
         })}
       </ul>
+      <div>
+        <button
+          className="px-2 py-1 rounded-lg border-2 hover:bg-sky-200 cursor-pointer"
+          onClick={() => clearBoard()}
+        >
+          Clear Board
+        </button>
+      </div>
     </div>
   );
 }
