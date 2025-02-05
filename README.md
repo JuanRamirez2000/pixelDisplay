@@ -1,50 +1,51 @@
-# React + TypeScript + Vite
+# Pixel Desk Display
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a quick and simple full stack app meant for my gf and her little sisters to write anything on a website and upload it to a display on my work desk.
 
-Currently, two official plugins are available:
+## Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+I wanted to stray away from current dev trends of using "NextJS + ShadCN" to ship anything and everything into production
+This will (hopefully) teach me better API configuration and management and (hopefully) teach me Devops.
 
-## Expanding the ESLint configuration
+- Frontend
+  - ReactJS
+  - Tanstack Router + Query
+  - TailwindCSS
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Backend 
+  - ExpressJS
+  - tRPC
 
-- Configure the top-level `parserOptions` property like this:
+- Display
+  - Python
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Progress
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Foundations
+- [x] Create a basic grid that can be drawn on
+- [ ] Create database that stores the previous and current submitted grid
+- [ ] Create the software to display the art on my desk
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Planned features
+- [ ] Tools for grid
+  - [ ] Paint bucket (fill)
+  - [ ] Brushes (varying sizes)
+  - [ ] Revert button
+- [ ] Common/prebuilt displays
+- [ ] Text input for display
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Planned infra
+- [ ] Login to restrict accounts
+
+## Questions, concerns, and other info
+
+If you love the project and want to copy what I have feel free to! I will try my best to make it structured enough for anyone to pickup and go
+I will write three blogs/reports on the main components.
+
+1. For the website design
+2. For the Raspberry Pi design
+3. For the connections between the two
+
+I might even make a video for it. Who knows :D
+
+-- Juan
