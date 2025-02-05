@@ -7,13 +7,16 @@ const COLS = 32;
 
 export default function Grid({
   selectedColor = "bg-blue-500",
+  defaultGrid,
   debug = true,
 }: {
   selectedColor?: string;
+  defaultGrid?: string[][];
   debug?: boolean;
 }) {
   const [grid, setGrid] = useState<string[][]>(
-    Array.from({ length: ROWS }, () => Array(COLS).fill(BASE_COLOR))
+    defaultGrid ||
+      Array.from({ length: ROWS }, () => Array(COLS).fill(BASE_COLOR))
   );
   const [hoveredCell, setHoveredCell] = useState<[number, number]>([0, 0]);
   const [handleGridUpdate, setHandleGridUpdate] = useState<boolean>(false);
@@ -45,7 +48,9 @@ export default function Grid({
   };
 
   const uploadBoard = () => {
-    convertTailwindToHex(grid);
+    const hexGrid = convertTailwindToHex(grid);
+    console.log(hexGrid);
+    console.log(grid);
   };
 
   return (
