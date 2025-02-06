@@ -1,13 +1,20 @@
 import cors from "cors";
 import express from "express";
 import * as trpcExpress from "@trpc/server/adapters/express";
-
 import { appRouter } from "./router";
-import { createContext } from "./context";
+import { createContext } from "./trpc";
 
 const app = express();
 
+// Constants
+const PORT = 4000;
+const HOST = "0.0.0.0";
+
 app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.use(
   "/trpc",
@@ -17,6 +24,6 @@ app.use(
   })
 );
 
-app.listen(4000);
+app.listen(PORT, HOST);
 
-export type AppRouter = typeof appRouter;
+console.log(`Running on http://${HOST}:${PORT}`);

@@ -3,6 +3,7 @@
     "@trpc/server": "^10.45.2",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "typescript": "^5.7.3",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -11,11 +12,12 @@
     "tsx": "^4.19.2"
   },
   "scripts": {
-    "start": "tsx src/index.ts"
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts"
   },
   "name": "server",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "server.ts",
   "author": "",
   "license": "ISC",
   "description": "",
