@@ -24,6 +24,8 @@ app.use(
   })
 );
 
+console.log(process.env.DATABASE_URL);
+
 app.listen(PORT, HOST);
 
 console.log(`Running on http://${HOST}:${PORT}`);

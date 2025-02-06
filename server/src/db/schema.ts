@@ -1,5 +1,8 @@
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { date, integer, pgTable, text } from "drizzle-orm/pg-core";
 
-export const usersTable = pgTable("users", {
+export const gridsTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  tailwindColorsGrid: text().array(),
+  hexColorsGrid: text().array(),
+  dateSubmitted: date()
 });
