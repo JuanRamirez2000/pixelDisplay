@@ -1,7 +1,9 @@
-import "dotenv";
+import { config } from "dotenv";
 import { defineConfig } from "drizzle-kit";
 
-const DATABASE_URL: string = process.env.DATABASE!;
+config({ path: ".env" });
+
+const DATABASE_URL: string = process.env.DATABASE_URL!;
 console.log(DATABASE_URL);
 
 export default defineConfig({

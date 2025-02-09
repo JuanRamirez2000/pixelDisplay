@@ -8,7 +8,6 @@ const app = express();
 
 // Constants
 const PORT = 4000;
-const HOST = "0.0.0.0";
 
 app.use(cors());
 
@@ -24,8 +23,6 @@ app.use(
   })
 );
 
-console.log(process.env.DATABASE_URL);
+app.listen(PORT);
 
-app.listen(PORT, HOST);
-
-console.log(`Running on http://${HOST}:${PORT}`);
+console.log(`Running on http://localhost:${PORT}`);

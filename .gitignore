@@ -37,3 +37,8 @@ server/*.local
 *.njsproj
 *.sln
 *.sw?
+
+# Env variables
+
+client/.env
+server/.env

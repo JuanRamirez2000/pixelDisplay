@@ -1,12 +1,19 @@
 import { initTRPC } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import "dotenv/config";
 
 // Context used in API Routes
 export const createContext = ({
   req,
   res,
 }: trpcExpress.CreateExpressContextOptions) => {
-  return {};
+  const client = postgres(process.env.DATABASE_URL!);
+  const db = drizzle({ client });
+  return {
+    db,
+  };
 };
 
 // Router and tRPC initialization to use for later
