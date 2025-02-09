@@ -1,3 +1,4 @@
+import { trpc } from "@/trpc";
 import { BASE_COLOR } from "@/utils/colors";
 import convertTailwindToHex from "@/utils/convertTailwindToHex";
 import { useState } from "react";
@@ -20,6 +21,8 @@ export default function Grid({
   );
   const [hoveredCell, setHoveredCell] = useState<[number, number]>([0, 0]);
   const [handleGridUpdate, setHandleGridUpdate] = useState<boolean>(false);
+
+  const mutation = trpc.grid.addGrid.useMutation();
 
   const updateGrid = (cell: [number, number]) => {
     setHoveredCell(cell);
@@ -49,8 +52,11 @@ export default function Grid({
 
   const uploadBoard = () => {
     const hexGrid = convertTailwindToHex(grid);
-    console.log(hexGrid);
-    console.log(grid);
+
+    mutation.mutate({
+      tailwindColors: grid,
+      hexColors: hexGrid,
+    });
   };
 
   return (
