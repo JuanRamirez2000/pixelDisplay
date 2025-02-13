@@ -1,5 +1,15 @@
-const BASE_COLOR: string = "bg-slate-50";
-const COLORS = [
+type COLOR_PAIR = {
+  tailwindColor: string;
+  hexColor: string;
+};
+
+const BASE_COLOR: COLOR_PAIR = {
+  tailwindColor: "bg-slate-50",
+  hexColor: "#f8fafc",
+};
+const COLOR_PALETTE: COLOR_PAIR[] = [
+  //https://lospec.com/palette-list/apollo
+  //Tailwind Slate
   {
     tailwindColor: "bg-slate-50",
     hexColor: "#f8fafc",
@@ -36,6 +46,8 @@ const COLORS = [
     tailwindColor: "bg-slate-900",
     hexColor: "#0f172b",
   },
+
+  //TAILWIND_SKY
   {
     tailwindColor: "bg-sky-200",
     hexColor: "#b8e6fe",
@@ -60,6 +72,7 @@ const COLORS = [
     tailwindColor: "bg-sky-700",
     hexColor: "#0069a8",
   },
+  //TAILWIND EMERALD
   {
     tailwindColor: "bg-emerald-200",
     hexColor: "#a4f4cf",
@@ -84,6 +97,7 @@ const COLORS = [
     tailwindColor: "bg-emerald-700",
     hexColor: "#007a55",
   },
+  //TAILWIND AMBER
   {
     tailwindColor: "bg-amber-200",
     hexColor: "#fee685",
@@ -108,6 +122,7 @@ const COLORS = [
     tailwindColor: "bg-amber-700",
     hexColor: "#bb4d00",
   },
+  //TAILWIND ROSE
   {
     tailwindColor: "bg-rose-200",
     hexColor: "#ffccd3",
@@ -132,6 +147,7 @@ const COLORS = [
     tailwindColor: "bg-rose-700",
     hexColor: "#c70036",
   },
+  //TAILWIND VIOLET
   {
     tailwindColor: "bg-violet-200",
     hexColor: "#ddd6ff",
@@ -157,58 +173,5 @@ const COLORS = [
     hexColor: "#7008e7",
   },
 ];
-const COLOR_PALETTE: string[] = [
-  //https://lospec.com/palette-list/apollo
-  //Tailwind Slate
-  "bg-slate-50",
-  "bg-slate-200",
-  "bg-slate-300",
-  "bg-slate-400",
-  "bg-slate-500",
-  "bg-slate-600",
-  "bg-slate-700",
-  "bg-slate-800",
-  "bg-slate-900",
 
-  //Tailwind Sky
-  "bg-sky-200",
-  "bg-sky-300",
-  "bg-sky-400",
-  "bg-sky-500",
-  "bg-sky-600",
-  "bg-sky-700",
-
-  //Tailwind Emerald
-  "bg-emerald-200",
-  "bg-emerald-300",
-  "bg-emerald-400",
-  "bg-emerald-500",
-  "bg-emerald-600",
-  "bg-emerald-700",
-
-  //Tailwind Amber
-  "bg-amber-200",
-  "bg-amber-300",
-  "bg-amber-400",
-  "bg-amber-500",
-  "bg-amber-600",
-  "bg-amber-700",
-
-  //Tailwind Rose
-  "bg-rose-200",
-  "bg-rose-300",
-  "bg-rose-400",
-  "bg-rose-500",
-  "bg-rose-600",
-  "bg-rose-700",
-
-  //Tailwind Rose
-  "bg-violet-200",
-  "bg-violet-300",
-  "bg-violet-400",
-  "bg-violet-500",
-  "bg-violet-600",
-  "bg-violet-700",
-];
-
-export { COLOR_PALETTE, BASE_COLOR };
+export { COLOR_PALETTE, BASE_COLOR, type COLOR_PAIR };

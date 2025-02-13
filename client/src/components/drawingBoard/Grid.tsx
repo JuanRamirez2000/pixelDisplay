@@ -5,9 +5,7 @@ const ROWS = 32;
 const COLS = 32;
 
 export default function Grid({
-  selectedColor = "bg-blue-500",
-  defaultGrid,
-  debug = true,
+  selectedColor = BASE_COLOR.hexColor,
 }: {
   selectedColor?: string;
   defaultGrid?: string[][];
@@ -55,7 +53,7 @@ export default function Grid({
         if (x !== mouseCoordinates[0] || y !== mouseCoordinates[1]) {
           setMouseCoordinates([x, y]);
           ctx.save();
-          ctx.fillStyle = "blue";
+          ctx.fillStyle = selectedColor;
           ctx.fillRect(x, y, 1, 1);
           ctx.restore();
         }
