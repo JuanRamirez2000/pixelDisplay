@@ -4,7 +4,7 @@ import { defineConfig } from "drizzle-kit";
 config({ path: ".env" });
 
 const DATABASE_URL: string = process.env.DATABASE_URL!;
-console.log(DATABASE_URL);
+console.log(DATABASE_URL)
 
 export default defineConfig({
   out: "./drizzle",

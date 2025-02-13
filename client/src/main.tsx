@@ -13,10 +13,14 @@ import { httpBatchLink } from "@trpc/client";
 // Create a new router instance
 const router = createRouter({ routeTree });
 const queryClient = new QueryClient();
+
 const trpcClient = trpc.createClient({
   links: [
     httpBatchLink({
-      url: "http://localhost:4000/trpc",
+      url:
+        import.meta.env.VITE_CODESPACE_DEV === "true"
+          ? "https://silver-carnival-54pjqrpjp99hp7wv-4000.app.github.dev/trpc"
+          : "http://localhost:4000/trpc",
     }),
   ],
 });
