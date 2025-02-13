@@ -1,7 +1,5 @@
-import { trpc } from "@/trpc";
 import { BASE_COLOR } from "@/utils/colors";
-import convertTailwindToHex from "@/utils/convertTailwindToHex";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ROWS = 32;
 const COLS = 32;
@@ -15,88 +13,72 @@ export default function Grid({
   defaultGrid?: string[][];
   debug?: boolean;
 }) {
-  const [grid, setGrid] = useState<string[][]>(
-    defaultGrid ||
-      Array.from({ length: ROWS }, () => Array(COLS).fill(BASE_COLOR))
-  );
-  const [hoveredCell, setHoveredCell] = useState<[number, number]>([0, 0]);
-  const [handleGridUpdate, setHandleGridUpdate] = useState<boolean>(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
+  const [mouseCoordinates, setMouseCoordinates] = useState<number[]>([-1, -1]);
 
-  const mutation = trpc.grid.addGrid.useMutation();
+  const indexHandler = (a: number, b: number): number => Math.floor(a / b);
 
-  const updateGrid = (cell: [number, number]) => {
-    setHoveredCell(cell);
-    if (handleGridUpdate) {
-      const newGrid = grid.map((row, rowIDX) => {
-        if (rowIDX === hoveredCell[0]) {
-          return row.map((color, colIDX) => {
-            if (colIDX === hoveredCell[1]) {
-              return selectedColor;
-            }
-            return color;
-          });
-        }
-        return row;
-      });
-      setGrid(newGrid);
+  const handleMouseUp = () => {
+    setMouseDown(false);
+    setMouseCoordinates([-1, -1]);
+  };
+
+  const handleMouseDown = () => {
+    setMouseDown(true);
+  };
+
+  const handleMouseMove = (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>
+  ) => {
+    if (mouseDown) {
+      paint(e);
     }
   };
 
-  const clearBoard = () => {
-    const clear = Array.from({ length: ROWS }, () =>
-      Array(COLS).fill(BASE_COLOR)
-    );
+  const paint = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const ctx = canvasRef.current.getContext("2d");
+      if (ctx) {
+        const target = e.target as Element;
+        const rect = target.getBoundingClientRect();
 
-    setGrid(clear);
+        const x = indexHandler(
+          (e.pageX - canvas.offsetLeft) * canvas.width,
+          rect.width
+        );
+        const y = indexHandler(
+          (e.pageY - canvas.offsetTop) * canvas.height,
+          rect.height
+        );
+        if (x !== mouseCoordinates[0] || y !== mouseCoordinates[1]) {
+          setMouseCoordinates([x, y]);
+          ctx.save();
+          ctx.fillStyle = "blue";
+          ctx.fillRect(x, y, 1, 1);
+          ctx.restore();
+        }
+      }
+    }
   };
 
-  const uploadBoard = () => {
-    const hexGrid = convertTailwindToHex(grid);
-
-    mutation.mutate({
-      tailwindColors: grid,
-      hexColors: hexGrid,
-    });
-  };
-
+  useEffect(() => {
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
   return (
     <section>
-      {debug && (
-        <span>
-          x: {hoveredCell[0]} y: {hoveredCell[1]}
-        </span>
-      )}
-      <ul
-        className="grid grid-col-32 grid-rows-32 grid-flow-col size-[48rem] cursor-pointer"
-        onMouseDown={() => setHandleGridUpdate(true)}
-        onMouseUp={() => setHandleGridUpdate(false)}
-      >
-        {grid?.map((row, i) => {
-          return row.map((color, j) => {
-            return (
-              <li
-                key={`${i * 10}+${j}`}
-                className={`${color} border-1 border-black hover:bg-slate-400`}
-                onMouseOver={() => updateGrid([i, j])}
-              ></li>
-            );
-          });
-        })}
-      </ul>
-      <div>
-        <button
-          className="px-2 py-1 rounded-lg border-2 hover:bg-sky-200 cursor-pointer"
-          onClick={() => clearBoard()}
-        >
-          Clear Board
-        </button>
-        <button
-          className="px-2 py-1 rounded-lg border-2 hover:bg-sky-200 cursor-pointer"
-          onClick={() => uploadBoard()}
-        >
-          Upload
-        </button>
-      </div>
+      <canvas
+        ref={canvasRef}
+        width={COLS}
+        height={ROWS}
+        className={`border-2 w-[42rem] h-[42rem]`}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+      />
     </section>
   );
 }
