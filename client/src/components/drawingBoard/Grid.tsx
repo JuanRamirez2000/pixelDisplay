@@ -37,7 +37,7 @@ export default function Grid({
   const paint = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
-      const ctx = canvasRef.current.getContext("2d");
+      const ctx = canvas.getContext("2d");
       if (ctx) {
         const target = e.target as Element;
         const rect = target.getBoundingClientRect();
@@ -74,6 +74,9 @@ export default function Grid({
         width={COLS}
         height={ROWS}
         className={`border-2 w-[42rem] h-[42rem]`}
+        style={{
+          imageRendering: "pixelated",
+        }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
       />
