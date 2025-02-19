@@ -4,6 +4,16 @@ import { useEffect, useRef, useState } from "react";
 const ROWS = 32;
 const COLS = 32;
 
+const rgbaToHex = (r: number, g: number, b: number, a: number) => {
+  return (
+    "#" +
+    [r, g, b, a]
+      .map((val) => val.toString(16))
+      .map((strVal) => (strVal.length === 1 ? "0" + strVal : strVal))
+      .join("")
+  );
+};
+
 export default function Grid({
   selectedColor = BASE_COLOR.hexColor,
 }: {
@@ -31,6 +41,38 @@ export default function Grid({
   ) => {
     if (mouseDown) {
       paint(e);
+    }
+  };
+
+  const handleClearBoard = () => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.fillStyle = BASE_COLOR.hexColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+  };
+
+  const handleUpload = () => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        const hexValues = [];
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        for (let i = 0; i <= data.length - 1; i += 4) {
+          const red = data[i];
+          const green = data[i + 1];
+          const blue = data[i + 2];
+          const alpha = data[i + 3];
+
+          hexValues.push(rgbaToHex(red, green, blue, alpha));
+        }
+        console.log(hexValues);
+      }
     }
   };
 
@@ -80,6 +122,10 @@ export default function Grid({
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
       />
+      <div>
+        <button onClick={handleClearBoard}>Clear</button>
+        <button onClick={handleUpload}>Upload</button>
+      </div>
     </section>
   );
 }
