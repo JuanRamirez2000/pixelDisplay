@@ -15,11 +15,9 @@ export const ColorGridRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const flatTailwindColors = input.tailwindColors.flat();
       const flatHexColors = input.hexColors.flat();
 
       return await ctx.db.insert(gridsTable).values({
-        tailwindColorsGrid: flatTailwindColors,
         hexColorsGrid: flatHexColors,
         dateSubmitted: new Date().toISOString(),
       });

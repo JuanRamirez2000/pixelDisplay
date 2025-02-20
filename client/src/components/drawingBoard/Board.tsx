@@ -5,7 +5,9 @@ import ColorPicker from "./ColorPicker";
 import testData from "@/utils/testData";
 
 export default function Board() {
-  const [selectedColor, setSelectedColor] = useState<string>(BASE_COLOR);
+  const [selectedColor, setSelectedColor] = useState<string>(
+    BASE_COLOR.hexColor
+  );
 
   return (
     <div className="flex flex-row">
