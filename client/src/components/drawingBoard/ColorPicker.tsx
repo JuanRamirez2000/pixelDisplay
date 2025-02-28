@@ -11,8 +11,13 @@ export default function ColorPicker({
         {COLOR_PALETTE.map((colorPair: COLOR_PAIR) => {
           return (
             <li
-              className={`${colorPair.tailwindColor} flex items-center justify-center duration-150 border-2 cursor-pointer size-16 border-slate-950 hover:scale-105`}
-              key={colorPair.tailwindColor}
+              className={
+                "flex items-center justify-center duration-150 border-2 cursor-pointer size-16 border-slate-950 hover:scale-105"
+              }
+              style={{
+                backgroundColor: colorPair.hexColor,
+              }}
+              key={colorPair.hexColor}
               onClick={() => setSelectedColor(colorPair.hexColor)}
             >
               <span className="p-2 "></span>
