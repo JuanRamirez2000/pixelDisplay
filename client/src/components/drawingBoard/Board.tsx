@@ -11,10 +11,7 @@ export default function Board() {
 
   return (
     <div className="flex flex-row">
-      <Grid
-        selectedColor={selectedColor}
-        defaultGrid={testData[0].tailwindGrid}
-      />
+      <Grid selectedColor={selectedColor} defaultGrid={testData.hexGrid} />
       <ColorPicker setSelectedColor={setSelectedColor} />
     </div>
   );

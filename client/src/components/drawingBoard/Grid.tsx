@@ -1,3 +1,4 @@
+import { trpc } from "@/trpc";
 import { BASE_COLOR } from "@/utils/colors";
 import { useEffect, useRef, useState } from "react";
 
@@ -16,14 +17,17 @@ const rgbaToHex = (r: number, g: number, b: number, a: number) => {
 
 export default function Grid({
   selectedColor = BASE_COLOR.hexColor,
+  defaultGrid,
 }: {
   selectedColor?: string;
-  defaultGrid?: string[][];
+  defaultGrid?: string[];
   debug?: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [mouseCoordinates, setMouseCoordinates] = useState<number[]>([-1, -1]);
+
+  const gridMutation = trpc.grid.addGrid.useMutation();
 
   const indexHandler = (a: number, b: number): number => Math.floor(a / b);
 
@@ -71,7 +75,10 @@ export default function Grid({
 
           hexValues.push(rgbaToHex(red, green, blue, alpha));
         }
-        console.log(hexValues);
+
+        gridMutation.mutate({
+          hexColors: hexValues.flat(Infinity),
+        });
       }
     }
   };
@@ -105,10 +112,26 @@ export default function Grid({
 
   useEffect(() => {
     window.addEventListener("mouseup", handleMouseUp);
+
+    if (defaultGrid) {
+      if (canvasRef.current) {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          for (let x = 0; x < ROWS; x++) {
+            for (let y = 0; y < COLS; y++) {
+              ctx.fillStyle = defaultGrid[x * COLS + y];
+              ctx.fillRect(x, y, 1, 1);
+            }
+          }
+        }
+      }
+    }
     return () => {
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [defaultGrid]);
+
   return (
     <section>
       <canvas

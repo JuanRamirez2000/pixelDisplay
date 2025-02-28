@@ -10,8 +10,7 @@ export const ColorGridRouter = router({
   addGrid: publicProcedure
     .input(
       z.object({
-        tailwindColors: z.array(z.array(z.string())),
-        hexColors: z.array(z.array(z.string())),
+        hexColors: z.array(z.string()),
       })
     )
     .mutation(async ({ ctx, input }) => {
